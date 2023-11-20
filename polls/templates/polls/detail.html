@@ -1,0 +1,32 @@
+{% extends "polls/base.html" %}
+{% block content %}
+    <h1>{{ question.question_text }}</h1>
+
+    <form action="{% url 'polls:vote' question.id %}" method="post">
+        {% csrf_token %}
+        <fieldset>
+            <legend><h2>Choices:</h2></legend>
+            {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+            {% for choice in question.choice_set.all %}
+                <input type="radio" name="choice" id="choice{{ choice.id }}" value="{{ choice.id }}">
+                <label for="choice{{ choice.id }}">{{ choice.choice_text }}</label>
+                <span class="vote-count"> : {{ choice.votes }}</span><br>
+            {% endfor %}
+        </fieldset>
+        <input type="submit" value="Vote">
+    </form>
+
+    <br>
+
+    <!-- Add a link to the question update page -->
+    <a href="{% url 'polls:update_question' question.id %}">Update Question</a>
+    
+    <!-- Add a link to delete the question -->
+    <a href="{% url 'polls:delete_question' question.id %}">Delete Question</a>
+
+    <ul>
+        {% for choice in question.choice_set.all %}
+            <li>{{ choice.choice_text }} - <a href="{% url 'polls:delete_choice' question.id choice.id %}">Delete Choice</a></li>
+        {% endfor %}
+    </ul>
+{% endblock %}

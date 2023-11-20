@@ -1,0 +1,9 @@
+<!-- add_question.html -->
+<form method="post">
+    {% csrf_token %}
+    {{ question_form.as_p }}
+    {% for form in choice_forms %}
+        {{ form.as_p }}
+    {% endfor %}
+    <button type="submit">Add Question and Choices</button>
+</form>

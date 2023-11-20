@@ -1,0 +1,6 @@
+<form method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete the question "{{ question.question_text }}" and its choices?</p>
+    <button type="submit">Delete</button>
+    <a href="{% url 'polls:detail' question.id %}">Cancel</a>
+</form>
